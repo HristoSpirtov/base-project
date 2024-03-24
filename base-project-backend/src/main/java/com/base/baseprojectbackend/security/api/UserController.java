@@ -1,0 +1,36 @@
+package com.base.baseprojectbackend.security.api;
+
+import com.base.baseprojectbackend.security.model.HttpResponse;
+import com.base.baseprojectbackend.security.model.RegisterModel;
+import com.base.baseprojectbackend.security.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
+
+@RestController
+@RequestMapping("/api")
+public class UserController {
+
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<HttpResponse> register(@RequestBody RegisterModel registerModel) {
+        this.userService.register(registerModel);
+        return new ResponseEntity<>(new HttpResponse(new Date(),
+                HttpStatus.OK.value(),
+                HttpStatus.OK,
+                "success_register"),
+                HttpStatus.OK);
+    }
+}
