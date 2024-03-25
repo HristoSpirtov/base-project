@@ -1,5 +1,6 @@
 package com.base.baseprojectbackend.security.filter;
 
+import com.base.baseprojectbackend.security.model.LoginResponseModel;
 import com.base.baseprojectbackend.security.util.JWTTokenProvider;
 import com.base.baseprojectbackend.security.model.LoginModel;
 import com.base.baseprojectbackend.security.user.Principal;
@@ -14,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.IOException;
 
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JWTTokenProvider jwtTokenProvider;
@@ -22,7 +23,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final ObjectMapper mapper = new ObjectMapper();
     public static final String JWT_TOKEN_HEADER = "Jwt-Token";
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTTokenProvider jwtTokenProvider) {
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, JWTTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -56,7 +57,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     ) throws IOException {
         Principal principal = (Principal) authentication.getPrincipal();
         String accessToken = jwtTokenProvider.generateJWTToken(principal);
+        LoginResponseModel model = new LoginResponseModel(
+            jwtTokenProvider.generateJWTToken(principal),
+            principal.getUsername()
+        );
         response.setHeader(JWT_TOKEN_HEADER, accessToken);
-        mapper.writeValue(response.getOutputStream(), accessToken);
+        mapper.writeValue(response.getOutputStream(), model);
     }
 }

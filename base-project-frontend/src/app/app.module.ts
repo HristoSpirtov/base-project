@@ -14,13 +14,19 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import { RegisterComponent } from './register/register.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { HomeComponent } from './home/home.component';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {BaseInterceptor} from "./interceptor/base.interceptor";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -34,9 +40,12 @@ import {HttpClientModule} from "@angular/common/http";
     MatCardModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: BaseInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

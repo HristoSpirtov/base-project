@@ -1,6 +1,6 @@
 package com.base.baseprojectbackend.security.config;
 
-import com.base.baseprojectbackend.security.filter.JWTAuthenticationFilter;
+import com.base.baseprojectbackend.security.filter.CustomAuthenticationFilter;
 import com.base.baseprojectbackend.security.response.CustomAccessDeniedHandler;
 import com.base.baseprojectbackend.security.response.CustomAuthenticationEntryPoint;
 import com.base.baseprojectbackend.security.util.JWTTokenProvider;
@@ -47,7 +47,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-        JWTAuthenticationFilter customAuthenticationFilter = new JWTAuthenticationFilter(authenticationManager, jwtTokenProvider);
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager, jwtTokenProvider);
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
 
         return http

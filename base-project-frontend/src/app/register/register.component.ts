@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {AuthenticationService} from "../service/authentication.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -13,15 +14,18 @@ export class RegisterComponent implements OnInit {
     password: new FormControl(''),
     repeatPassword: new FormControl(''),
   });
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   submit() {
     if (this.form.valid) {
-      this.authenticationService.register(this.form.value).subscribe(x => {
-        console.log(x)
+      this.authenticationService.register(this.form.value).subscribe( {
+        next: () => this.router.navigate(['login']),
+        error: () => {
+          //TODO when username already exists
+        }
       })
     }
   }
