@@ -1,17 +1,12 @@
 import {Injectable} from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  Router,
-  RouterStateSnapshot,
-} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable, of, switchMap} from 'rxjs';
 import {StoreService} from "../service/store.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoggedUserGuard implements CanActivate {
+export class AnonymousUserGuard implements CanActivate {
 
   constructor(
     private store: StoreService,
@@ -26,12 +21,11 @@ export class LoggedUserGuard implements CanActivate {
     return this.store.getCurrentUser()
       .pipe(switchMap(user => {
         let isDefined = user.accessToken != '' && user.username != '';
-        if (!isDefined) {
-          this.router.navigate(['login'], {queryParams: {redirectUri: state.url}}).then();
+        if (isDefined) {
+          this.router.navigate(['home']).then();
         }
-        return of(isDefined);
+        return of(!isDefined);
       }))
   }
-
 
 }

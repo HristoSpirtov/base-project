@@ -5,8 +5,4 @@ export class User {
   constructor() {
   }
 
-  public isDefined() : boolean {
-    return this.accessToken != '' && this.username != ''
-  }
-
 }

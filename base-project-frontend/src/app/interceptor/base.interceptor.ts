@@ -10,22 +10,15 @@ import {Router} from "@angular/router";
 import {ErrorDialogComponent} from "../error-dialog/error-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {StoreService} from "../service/store.service";
-import {User} from "../model/User";
 
 @Injectable()
 export class BaseInterceptor implements HttpInterceptor {
-  user!: User
 
-  constructor(private router: Router, private dialog: MatDialog, private store: StoreService) {
-    this.store.user.subscribe(user => {
-      this.user = user
-    })
-  }
+  constructor(private router: Router, private dialog: MatDialog, private store: StoreService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const loggedInUser = this.store.getCurrentUser();
     const httpHeaders = request.headers
-      .append('Authorization', `Bearer ${this.user ? this.user.accessToken : ""}`)
+      .append('Authorization', `Bearer ${this.store.getToken() ? this.store.getToken() : ""}`)
 
     let cloned = request.clone({
       headers: httpHeaders,

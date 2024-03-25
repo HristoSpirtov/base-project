@@ -7,25 +7,32 @@ import {User} from "../model/User";
 })
 export class StoreService {
 
-  private userSource = new BehaviorSubject<User>(new User());
-  public user: Observable<User> = this.userSource.asObservable();
+  private userSource;
 
-  constructor() { }
+  constructor() {
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : new User();
+    this.userSource = new BehaviorSubject<User>(user);
+  }
 
   enhanceUserWithDetails(responseUser: User) {
-    const user = this.userSource.getValue();
+    let user = this.userSource.getValue();
     user.username = responseUser.username
     user.accessToken = responseUser.accessToken
     this.changeUser(user);
   }
 
   changeUser(user: User): void {
-    window.localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
     this.userSource.next(user);
   }
 
   getCurrentUser(): Observable<User> {
-    return this.user
+    return this.userSource.asObservable()
+  }
+
+  getToken(): String {
+    return this.userSource.value.accessToken
   }
 
 }
