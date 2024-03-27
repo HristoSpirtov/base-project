@@ -13,11 +13,13 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
-  public register(registerForm: any): Observable<HttpResponse<any>> {
+  register(registerForm: any): Observable<HttpResponse<any>> {
     return this.http.post<any>(`${this.host}/api/register`, registerForm);
   }
 
   login(loginForm: any) : Observable<User> {
     return this.http.post<User>(`${this.host}/api/login`, loginForm);
   }
+
+
 }

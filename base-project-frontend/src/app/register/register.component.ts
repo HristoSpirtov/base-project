@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
   submit() {
     if (this.form.valid) {
       this.authenticationService.register(this.form.value).subscribe( {
-        next: () => this.router.navigate(['login']),
+        next: () => this.router.navigate(['']),
         error: () => {
           //TODO when username already exists
         }

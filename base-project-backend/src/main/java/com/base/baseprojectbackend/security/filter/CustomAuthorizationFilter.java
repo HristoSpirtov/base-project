@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -72,7 +71,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                         new Date(),
                         UNAUTHORIZED.value(),
                         UNAUTHORIZED,
-                        "Token has expired!");
+                        "Expired Access Token");
 
                 response.setContentType(APPLICATION_JSON_VALUE);
                 response.setStatus(UNAUTHORIZED.value());

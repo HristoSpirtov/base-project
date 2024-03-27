@@ -16,7 +16,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Component
 public class CustomAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
-    public static final String FORBIDDEN_MESSAGE = "Please provide valid credentials and try again";
+    public static final String FORBIDDEN_MESSAGE = "Please provide valid credentials and try again or register if you dont have an account";
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override

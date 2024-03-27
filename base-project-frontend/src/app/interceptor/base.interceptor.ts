@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import {ErrorDialogComponent} from "../error-dialog/error-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {StoreService} from "../service/store.service";
+import {User} from "../model/User";
 
 @Injectable()
 export class BaseInterceptor implements HttpInterceptor {
@@ -28,8 +29,18 @@ export class BaseInterceptor implements HttpInterceptor {
         if (error.error.httpStatusCode === 403) {
           this.router.navigate(['login']);
           this.dialog.open(ErrorDialogComponent, {
-            data: { message: error.error.message },
+            data: { message: error.error.message, heading: "Forbidden" },
           });
+        }
+        if (error.error.httpStatusCode === 401) {
+          if (error.error.message === "You do not have permission to access this resource") {
+            this.dialog.open(ErrorDialogComponent, {
+              data: { message: error.error.message, heading: "Unauthorized" },
+            });
+          } else if (error.error.message === "Expired Access Token") {
+            this.store.changeUser(new User());
+            this.router.navigate(['']);
+          }
         }
         return throwError(() => error);
       })

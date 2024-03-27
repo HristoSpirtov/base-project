@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class JWTTokenProvider {
 
     private static final String TOKEN_CANNOT_BE_VERIFIED = "Token cannot be verified";
-    private static final long JWT_EXPIRATION_TIME = 60 * 1000;  // 15 min expressed in milliseconds
+    private static final long JWT_EXPIRATION_TIME =  4000;  // 15 min expressed in milliseconds
 
     @Value("123")
     private String secret;

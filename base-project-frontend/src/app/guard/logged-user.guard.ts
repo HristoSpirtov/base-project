@@ -27,7 +27,7 @@ export class LoggedUserGuard implements CanActivate {
       .pipe(switchMap(user => {
         let isDefined = user.accessToken != '' && user.username != '';
         if (!isDefined) {
-          this.router.navigate(['login'], {queryParams: {redirectUri: state.url}}).then();
+          this.router.navigate([''], {queryParams: {redirectUri: state.url}}).then();
         }
         return of(isDefined);
       }))

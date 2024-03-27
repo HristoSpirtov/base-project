@@ -18,7 +18,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
-    public static final String ACCESS_DENIED_MESSAGE = "You do not have permission to access this page";
+    public static final String ACCESS_DENIED_MESSAGE = "You do not have permission to access this resource";
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override

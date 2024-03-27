@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { AppRoutingModule } from './app-routing.module';
-import { LoginComponent } from './login/login.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -19,14 +18,15 @@ import { HomeComponent } from './home/home.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {BaseInterceptor} from "./interceptor/base.interceptor";
+import {IndexComponent} from "./index/index.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     RegisterComponent,
     HomeComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
